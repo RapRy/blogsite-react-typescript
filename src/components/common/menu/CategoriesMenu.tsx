@@ -16,6 +16,7 @@ const CategoriesMenu = () => {
   const { data: categoryList, isLoading, error } = useGetCategoriesQuery();
 
   console.log("test");
+  console.log("yes");
 
   return (
     <>

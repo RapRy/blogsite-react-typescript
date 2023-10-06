@@ -15,8 +15,6 @@ import { replaceAllSpaceWithHyphen } from "../../../utils/helpers/stringManipula
 const CategoriesMenu = () => {
   const { data: categoryList, isLoading, error } = useGetCategoriesQuery();
 
-  console.log(error);
-
   return (
     <>
       <Typography

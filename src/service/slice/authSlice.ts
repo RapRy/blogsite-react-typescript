@@ -2,7 +2,7 @@ import {
   AuthModel,
   SignInFormdataType,
 } from "../../models/user_model/authModel";
-import { signInEndpoint } from "../../utils/apiEndpoints";
+import { signInEndpoint } from "../apiEndpoints";
 import { saveToStorage } from "../../utils/helpers/storageHelper";
 import { user_credentials_key } from "../../utils/string";
 import { blogApi } from "../apiSlice";

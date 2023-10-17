@@ -1,7 +1,9 @@
 import { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import { lazy } from "@loadable/component";
+import { ToastContainer } from "react-toastify";
 import "./App.css";
+import "react-toastify/dist/ReactToastify.css";
 
 // components
 import HomeMenu from "./components/layout/HomeMenu";
@@ -16,27 +18,30 @@ const AuthPage = lazy(() => import("./components/auth/AuthPage"));
 
 function App() {
   return (
-    <div className="App">
-      <Suspense fallback={<div>Loading...</div>}>
-        <Routes>
-          <Route
-            path={homeRoute}
-            element={
-              <HomeMenu>
-                <>
-                  <HeroPage />
-                </>
-              </HomeMenu>
-            }
-          />
+    <>
+      <ToastContainer />
+      <div className="App">
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            <Route
+              path={homeRoute}
+              element={
+                <HomeMenu>
+                  <>
+                    <HeroPage />
+                  </>
+                </HomeMenu>
+              }
+            />
 
-          <Route path={authRoute} element={<AuthPage />} />
-          <Route path={forumRoute} element={<PrivateRoute />}>
-            <Route path={forumRoute} element={<ForumHomePage />} />
-          </Route>
-        </Routes>
-      </Suspense>
-    </div>
+            <Route path={authRoute} element={<AuthPage />} />
+            <Route path={forumRoute} element={<PrivateRoute />}>
+              <Route path={forumRoute} element={<ForumHomePage />} />
+            </Route>
+          </Routes>
+        </Suspense>
+      </div>
+    </>
   );
 }
 

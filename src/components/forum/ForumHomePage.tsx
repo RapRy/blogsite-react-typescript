@@ -1,9 +1,23 @@
-import ForumMenu from "../layout/ForumMenu";
+import {
+  activeUsersDashboardTag,
+  newUsersDashboardTag,
+} from "../../service/queryTags";
+import { activeUsersText, newUsersText } from "../../utils/string";
+import UsersPanelDashboard from "../user/UsersPanelDashboard";
+import StatsPanel from "./StatsPanel";
 
 export default function ForumHomePage() {
   return (
-    <ForumMenu>
-      <div>the forum</div>
-    </ForumMenu>
+    <>
+      <StatsPanel />
+      <UsersPanelDashboard
+        title={newUsersText}
+        queryTag={newUsersDashboardTag}
+      />
+      <UsersPanelDashboard
+        title={activeUsersText}
+        queryTag={activeUsersDashboardTag}
+      />
+    </>
   );
 }

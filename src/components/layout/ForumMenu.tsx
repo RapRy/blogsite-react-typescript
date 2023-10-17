@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import _ from "lodash";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import AppBar from "@mui/material/AppBar";
@@ -9,16 +9,28 @@ import Avatar from "@mui/material/Avatar";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import Divider from "@mui/material/Divider";
-import Button from "@mui/material/Button";
-import List from "@mui/material/List";
 import SearchIcon from "@mui/icons-material/Search";
-import CategoriesMenu from "../common/menu/CategoriesMenu";
+
+// components
+import CategoriesMenu from "../category/CategoriesMenu";
+import TopicsAside from "../topic/TopicsAside";
+
+// helpers
+import { latestTopicsText, hotTopicsText } from "../../utils/string";
+import {
+  latestTopicsSideMenuTag,
+  hotTopicsSideMenuTag,
+} from "../../service/queryTags";
+import { replaceAllSpaceWithHyphen } from "../../utils/helpers/stringManipulate";
+import { getUserCredential } from "../../utils/helpers/storageHelper";
 
 // components
 
 const drawerWidth: number = 320;
 
 export default function ForumMenu({ children }: { children: React.ReactNode }) {
+  const user = getUserCredential();
+
   return (
     <Box sx={{ display: "flex" }}>
       <AppBar
@@ -48,6 +60,15 @@ export default function ForumMenu({ children }: { children: React.ReactNode }) {
               The Forum
             </Link>
           </Typography>
+          <Box sx={{ display: { xs: "none", sm: "block" } }}>
+            <Avatar>
+              {user
+                ? _.isEmpty(user.name.firstName)
+                  ? user.username.charAt(0).toUpperCase()
+                  : user.name.firstName.charAt(0).toUpperCase()
+                : "A"}
+            </Avatar>
+          </Box>
         </Toolbar>
       </AppBar>
       <Box component="nav">
@@ -105,7 +126,23 @@ export default function ForumMenu({ children }: { children: React.ReactNode }) {
             />
             <CategoriesMenu />
           </Box>
+          <TopicsAside
+            routeName={replaceAllSpaceWithHyphen(
+              latestTopicsText
+            ).toLowerCase()}
+            textTitle={latestTopicsText}
+            queryTag={latestTopicsSideMenuTag}
+          />
+          <TopicsAside
+            routeName={replaceAllSpaceWithHyphen(hotTopicsText).toLowerCase()}
+            textTitle={hotTopicsText}
+            queryTag={hotTopicsSideMenuTag}
+          />
         </Drawer>
+      </Box>
+      <Box component="main" style={{ width: "100%", padding: "0 20px" }}>
+        <Toolbar />
+        {children}
       </Box>
     </Box>
   );
